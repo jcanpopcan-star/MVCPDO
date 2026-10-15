@@ -7,9 +7,10 @@
             foreach($usuarios as $fila => $item){
                 echo "
                     <tr>
-                        <td>".$item["idUsuario"]."</td>
+                        <td>".$item["idusuario"]."</td>
                         <td>".$item["nombre"]."</td>
                         <td>".$item["apellido"]."</td>
+                        <td><a href='index.php?action=editarUsuario&idUsuario=".$item["idusuario"]."'>Editar</a></td>
                     </tr>
                 ";
             }
@@ -84,6 +85,53 @@
                 }
             }
         }
+
+    public function editarUsuario(int $idUsuario){
+        $respuestaModelo = UsuarioModel::buscarUsuarioId($idUsuario);
+        
+        foreach($respuestaModelo as $user){
+            $datosUsuario = array(
+                "Nombre" => $user['nombre'],
+                "Apellido" => $user['apellido'],
+                "Usuario" => $user['user'],
+                "Password" => $user['password']
+            );
+        }
+        return $datosUsuario;
+    }
+
+    public function actualizarUsuario(){
+            if(isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['usuario']) && isset($_POST['password']) && isset($_SESSION['token'])&& isset($_POST['idUsuario']) ){
+                if( preg_match('/^[a-zA-Z]+$/',$_POST["nombre"]) &&
+                    preg_match('/^[a-zA-Z]+$/',$_POST["apellido"]) &&
+                    preg_match('/^[a-zA-Z]+$/',$_POST["usuario"]) &&
+                    preg_match('/^[a-zA-Z]+$/',$_POST["password"]) &&
+                    hash_equals($_SESSION['token'],$_POST['token'])
+                ){
+
+                    $datos = array(
+                        "idUsuario" => $_POST['idUsuario'],
+                        "nombre" => $_POST['nombre'],
+                        "apellido" => $_POST['apellido'],
+                        "usuario" => $_POST['usuario'],
+                        "password" => $_POST['password']
+                    );
+
+                    $respuestaModeloUsuario = UsuarioModel::actualizarUsuario($datos);
+
+                    if($respuestaModeloUsuario="exito"){
+                        echo "Guardado correctamente";
+                    }
+                    else if($respuestaModeloUsuario="error"){
+                        echo "Error al actualizar";
+                    }
+                }
+                else{
+                    echo "datos invalidos";
+                }
+
+            }
+    }
 
     }
 

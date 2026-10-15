@@ -6,6 +6,7 @@
         <tr>ID</tr>
         <tr>Nombre</tr>
         <tr>Apellido</tr>
+        <tr>Editar</tr>
     </thead>
 
 

@@ -17,6 +17,10 @@
                 $modulo = "View/Modulos/Usuario/".$enlace.".php";
             }
 
+            else if($enlace == "editarUsuario" && $sesion){
+                $modulo = "View/Modulos/Usuario/".$enlace.".php";
+            }
+
             else if($enlace == "registro" && $sesion){
                 $modulo = "View/Modulos/Usuario/".$enlace.".php";
             }
