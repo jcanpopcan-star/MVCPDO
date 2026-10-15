@@ -1,9 +1,15 @@
-<h1>Encabezado</h1>
+<h1>Bienvenido <?php
+    if(isset($_SESSION['token'])){
+        echo $_SESSION['nombre']." ".$_SESSION['apellido'];
+    }
+?></h1>
 
 <ul>
     <li> <a href="index.php?action=inicio"> Inicio </a> </li>
-    <li> <a href="index.php?action=usuarios"> Usuarios </a> </li>
-    <li> <a href="index.php?action=registro"> Registro </a> </li>
+    <?php if(isset($_SESSION['token'])){ echo "<li> <a href='index.php?action=usuarios'> Usuarios </a> </li>";  }?>
+    <?php if(isset($_SESSION['token'])){ echo "<li> <a href='index.php?action=registro'> Registro </a> </li>";  }?>
+    <li> <a href="index.php?action=login"> Login </a> </li>
+    <?php if(isset($_SESSION['token'])){ echo "<li> <a href='index.php?action=logout'> Cerrar sesión </a> </li>";  }?>
 </ul>
 
 <?php
